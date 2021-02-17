@@ -645,3 +645,35 @@ JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 554: uncaught e
 JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 554: uncaught exception: 2147500036
 console.log: "RemoteSettingsWorker error: Error: Can't import when we've started shutting down."
 1608764254112	Marionette	INFO	Stopped listening on port 43597
+1613508812012	geckodriver	INFO	Listening on 127.0.0.1:43845
+1613508813000	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilel0TV0F"
+console.info: MINT: Trying to use the system region (based on LANG).
+console.info: MINT: System region is FR
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1613508831286	Marionette	INFO	Listening on port 45501
+1613508831961	Marionette	WARN	TLS certificate errors will be ignored for this session
+1613508832004	Marionette	ERROR	[18] No reply from Marionette:Register
+console.info: MINT: Loading search-config defaults.
+JavaScript error: resource://gre/modules/TelemetryUtils.jsm, line 159: TypeError: date is undefined
+1613508847379	geckodriver	INFO	Listening on 127.0.0.1:36077
+1613508847389	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilelQmEcL"
+console.info: MINT: Trying to use the system region (based on LANG).
+console.info: MINT: System region is FR
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1613508862477	Marionette	INFO	Listening on port 36513
+1613508862620	Marionette	WARN	TLS certificate errors will be ignored for this session
+1613508862724	Marionette	ERROR	[15] No reply from Marionette:Register
+console.info: MINT: Loading search-config defaults.
+JavaScript error: resource://gre/modules/TelemetryUtils.jsm, line 159: TypeError: date is undefined
+console.info: MINT: main/search-config update being skipped
+console.info: MINT: main/search-config update being skipped
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1613509248410	Marionette	INFO	Stopped listening on port 45501
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1613509251269	Marionette	INFO	Stopped listening on port 36513
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+

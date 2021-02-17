@@ -3,6 +3,7 @@ from django.template import loader
 from django.shortcuts import render, redirect
 from request_api_app.search_engine import FindSubstitute
 from database_handler_app.models import MyUsers, Favorites, FoodList
+from django.contrib.auth.decorators import login_required
 import json
 
 
@@ -47,6 +48,7 @@ def search_results(request):
                       {'list_id': list_id, 'message': message, 'dict_healthy_substitute': dict_healthy_substitute})
 
 
+@login_required
 def is_favorite(request):
     """Allow user to record favorites food in database. Reroute on favorites list page."""
     if request.method == 'POST':

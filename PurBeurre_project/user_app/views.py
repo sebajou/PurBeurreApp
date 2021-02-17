@@ -4,6 +4,7 @@ from database_handler_app.models import MyUsers, Allergen, Diet
 from user_app.sign_up_form import SignUpForm
 import logging
 from sentry_sdk import capture_message
+from django.contrib.auth.decorators import login_required
 
 
 # Get an instance of a logger
@@ -44,6 +45,7 @@ def user_form(request):
     return render(request, 'registration/signup.html', {'form': form})
 
 
+@login_required
 def profile(request):
     """Display profile page. """
     if request.user.is_authenticated:
