@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from django.utils.translation import ugettext_lazy as _
 
 class Allergen(models.Model):
     allergen_name = models.CharField(max_length=200, unique=True)
@@ -28,6 +28,9 @@ class FoodList(models.Model):
 
 
 class MyUsers(AbstractUser, models.Model):
+    USERNAME_FIELD = 'email'
+    email = models.EmailField(_('email address'), unique=True) # changes email to unique and blank to false
+    REQUIRED_FIELDS = [] # removes email from REQUIRED_FIELDS
     diet_type = models.ManyToManyField(Diet)
     search_food = models.ManyToManyField(FoodList)
     alergy = models.ManyToManyField(Allergen)
