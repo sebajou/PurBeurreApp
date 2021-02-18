@@ -5,6 +5,8 @@ import pytest
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.by import By
+from PurBeurre_project.settings import BASE_DIR
+import os
 
 
 class AccountTestCase(LiveServerTestCase):
@@ -12,7 +14,7 @@ class AccountTestCase(LiveServerTestCase):
     @pytest.mark.selenium_mk
     def test_create_then_logout_user(self):
         driver = webdriver.Firefox(
-            executable_path="/home/sebastien/Documents/Cours_Programation/Projet_8/PurBeurreApp/gecko/geckodriver")
+            executable_path=os.path.join(BASE_DIR, 'gecko/geckodriver'))
 
         # Create user
         driver.get('http://127.0.0.1:8000/user_form/')
@@ -41,7 +43,7 @@ class AccountTestCase(LiveServerTestCase):
     @pytest.mark.selenium_mk
     def test_login_then_search_then_favorit_then_foodpage(self):
         driver = webdriver.Firefox(
-            executable_path="/home/sebastien/Documents/Cours_Programation/Projet_8/PurBeurreApp/gecko/geckodriver")
+            executable_path=os.path.join(BASE_DIR, 'gecko/geckodriver'))
 
         # Login
         driver.get('http://127.0.0.1:8000/accounts/login/')

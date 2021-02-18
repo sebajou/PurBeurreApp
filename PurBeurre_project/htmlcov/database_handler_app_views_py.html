@@ -112,7 +112,7 @@
     <p id="t59" class="mis show_mis"><span class="n"><a href="#t59">59</a></span><span class="t">        <span class="nam">current_user</span> <span class="op">=</span> <span class="nam">request</span><span class="op">.</span><span class="nam">user</span>&nbsp;</span><span class="r"></span></p>
     <p id="t60" class="mis show_mis"><span class="n"><a href="#t60">60</a></span><span class="t">        <span class="nam">print</span><span class="op">(</span><span class="str">'current_user => '</span><span class="op">,</span> <span class="nam">current_user</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t61" class="pln"><span class="n"><a href="#t61">61</a></span><span class="t">        <span class="com"># Add User favorite choice in database through many to many relationship.</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t62" class="mis show_mis"><span class="n"><a href="#t62">62</a></span><span class="t">        <span class="nam">qs_user</span> <span class="op">=</span> <span class="nam">MyUsers</span><span class="op">.</span><span class="nam">objects</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="nam">username</span><span class="op">=</span><span class="nam">current_user</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t62" class="mis show_mis"><span class="n"><a href="#t62">62</a></span><span class="t">        <span class="nam">qs_user</span> <span class="op">=</span> <span class="nam">MyUsers</span><span class="op">.</span><span class="nam">objects</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="nam">email</span><span class="op">=</span><span class="nam">current_user</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t63" class="mis show_mis"><span class="n"><a href="#t63">63</a></span><span class="t">        <span class="nam">print</span><span class="op">(</span><span class="str">'qs_user => '</span><span class="op">,</span> <span class="nam">qs_user</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t64" class="mis show_mis"><span class="n"><a href="#t64">64</a></span><span class="t">        <span class="key">if</span> <span class="nam">Favorites</span><span class="op">.</span><span class="nam">objects</span><span class="op">.</span><span class="nam">filter</span><span class="op">(</span><span class="nam">id_food_list</span><span class="op">=</span><span class="nam">id_favorite_food</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p id="t65" class="mis show_mis"><span class="n"><a href="#t65">65</a></span><span class="t">            <span class="nam">qs_favorite</span> <span class="op">=</span> <span class="nam">Favorites</span><span class="op">.</span><span class="nam">objects</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="nam">id_food_list</span><span class="op">=</span><span class="nam">id_favorite_food</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -190,7 +190,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.3</a>,
-            created at 2021-02-18 18:11 +0100
+            created at 2021-02-18 19:06 +0100
         </p>
     </div>
 </div>
