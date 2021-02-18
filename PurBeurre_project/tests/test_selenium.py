@@ -50,8 +50,8 @@ class AccountTestCase(LiveServerTestCase):
         username = driver.find_element_by_id('id_username')
         password = driver.find_element_by_id('id_password')
         submit = driver.find_element_by_id('submit')
-        username.send_keys('legopolicier@gmail.com')
-        password.send_keys('1AQWXSZ2')
+        username.send_keys('seleium_test5_email@gmail.com')
+        password.send_keys('seleium_test5_psw1AQWXSZ2')
         submit.send_keys(Keys.RETURN)
 
         # Search food
