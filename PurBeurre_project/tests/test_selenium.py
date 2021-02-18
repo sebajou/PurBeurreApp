@@ -48,7 +48,7 @@ class AccountTestCase(LiveServerTestCase):
         username = driver.find_element_by_id('id_username')
         password = driver.find_element_by_id('id_password')
         submit = driver.find_element_by_id('submit')
-        username.send_keys('legopolicier')
+        username.send_keys('legopolicier@gmail.com')
         password.send_keys('1AQWXSZ2')
         submit.send_keys(Keys.RETURN)
 

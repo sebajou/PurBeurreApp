@@ -59,7 +59,7 @@ def is_favorite(request):
         current_user = request.user
         print('current_user => ', current_user)
         # Add User favorite choice in database through many to many relationship.
-        qs_user = MyUsers.objects.get(username=current_user)
+        qs_user = MyUsers.objects.get(email=current_user)
         print('qs_user => ', qs_user)
         if Favorites.objects.filter(id_food_list=id_favorite_food):
             qs_favorite = Favorites.objects.get(id_food_list=id_favorite_food)

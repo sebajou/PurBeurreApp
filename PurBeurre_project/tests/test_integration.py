@@ -18,6 +18,8 @@ def create_user(db, django_user_model, test_password):
         kwargs['password'] = "1AQWXSZ2"
         if 'username' not in kwargs:
             kwargs['username'] = "LeGrandMechantLoup"
+        if 'email' not in kwargs:
+            kwargs['email'] = "legrandmechantloup@gmail.com"
         if 'id' not in kwargs:
             kwargs['id'] = 1
         return django_user_model.objects.create_user(**kwargs)
@@ -29,7 +31,7 @@ def auto_login_user(db, client, create_user, test_password):
     def make_auto_login(user=None):
         if user is None:
             user = create_user()
-        client.login(username=user.username, password=test_password)
+        client.login(email=user.email, password=test_password)
         return client, user
     return make_auto_login
 
@@ -38,13 +40,14 @@ def auto_login_user(db, client, create_user, test_password):
 def test_login_search_add_favorite(auto_login_user):
     # mock request.user and login
     client, user = auto_login_user()
-    response = client.post('/accounts/login/', {'username': 'LeGrandMechantLoup', 'password': '1AQWXSZ2'})
+    response = client.post('/accounts/login/', {'email': 'legrandmechantloup@gmail.com', 'password': '1AQWXSZ2'})
     # Search food
-    search_food_request = {'search': 'beurre de cacahuète'}
+    search_food_request = {'search': 'pizza chèvre'}
     response = client.post('/database_handler_app/search_results/', search_food_request)
     # Extract id from html in response.content
     soup = BeautifulSoup(response.content, features="html.parser")
     find_id = soup.find(id='favorite_substitute_id_0')
+    print('\n', '\n', 'find_id => ', '\n', '\n', find_id, '\n', '\n')
     first_id_from_search = int(find_id['value'])
     response = client.post('/database_handler_app/is_favorite/', {'favorite_substitute_id': first_id_from_search})
     assert response.status_code == 302

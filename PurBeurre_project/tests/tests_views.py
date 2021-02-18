@@ -106,7 +106,7 @@ class TestRoutesUsers:
 
     def test_route_user_profile(self):
         response_profile = c.get('/accounts/profile/')
-        assert response_profile.status_code == 200
+        assert response_profile.status_code == 302
 
     @pytest.mark.django_db
     def test_route_logout(self):
