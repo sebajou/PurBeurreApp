@@ -17,11 +17,11 @@ def user_form(request):
         # Form for sign up from class in sign_up_form.py module
         form = SignUpForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            user = form.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             # authentication and login
-            user = authenticate(username=username, password=raw_password)
+            # user = authenticate(username=username, password=raw_password)
             login(request, user)
             # special treatment of data alergy and diet which from many to many field
             qs_username = MyUsers.objects.get(username=username)

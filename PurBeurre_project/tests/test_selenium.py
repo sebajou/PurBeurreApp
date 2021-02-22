@@ -1,6 +1,7 @@
 from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.firefox.options import Options
 import pytest
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
@@ -13,8 +14,11 @@ class AccountTestCase(LiveServerTestCase):
 
     @pytest.mark.selenium_mk
     def test_create_then_logout_user(self):
-        driver = webdriver.Firefox(
-            executable_path=os.path.join(BASE_DIR, 'gecko/geckodriver'))
+        options = Options()
+        options.headless = True
+        print("Headless Firefox Initialized")
+
+        driver = webdriver.Firefox(options=options, executable_path=os.path.join(BASE_DIR, 'gecko/geckodriver'))
 
         # Create user
         driver.get('http://127.0.0.1:8000/user_form/')
@@ -42,8 +46,12 @@ class AccountTestCase(LiveServerTestCase):
 
     @pytest.mark.selenium_mk
     def test_login_then_search_then_favorit_then_foodpage(self):
-        driver = webdriver.Firefox(
-            executable_path=os.path.join(BASE_DIR, 'gecko/geckodriver'))
+
+        options = Options()
+        options.headless = True
+        print("Headless Firefox Initialized")
+
+        driver = webdriver.Firefox(options=options, executable_path=os.path.join(BASE_DIR, 'gecko/geckodriver'))
 
         # Login
         driver.get('http://127.0.0.1:8000/accounts/login/')
@@ -71,3 +79,5 @@ class AccountTestCase(LiveServerTestCase):
         # Go to food page
         driver.implicitly_wait(20)
         driver.find_element_by_id('id_submit_off_0').click()
+
+        driver.quit()

@@ -29,6 +29,7 @@ class PopDBFromJsonWithCategories:
         req = requests.get(
             "https://fr.openfoodfacts.org/cgi/search.pl?", params=payload
         )
+        print('Json did')
         data_category_json = req.json()
         return data_category_json, name_category
 
@@ -48,6 +49,15 @@ class PopDBFromJsonWithCategories:
                 nutri_score_grad = data['nutriscore_grade']
                 image_src = data['image_url']
                 allergen_list = data['allergens']
+                # Take labels from labels_tags
+                labels_list = data['labels_tags']
+                print("labels_tags => ", labels_list)
+                ingredients_tags = data['ingredients_tags']
+                print("ingredients_tags => ", ingredients_tags)
+                # labels_list = []
+                # for label in data['labels_tags']:
+                #     labels_list.append(label)
+                # print(labels_list)
                 # Capt data from data['nutriments']
                 nutriments_100g = data['nutriments']
                 # Add to dictionary only appropriate nutriments for 100g
@@ -67,6 +77,8 @@ class PopDBFromJsonWithCategories:
                                               "nutri_score_grad": nutri_score_grad,
                                               "food_url": food_url,
                                               "image_src": image_src,
+                                              "labels_list": labels_list,
+                                              "ingredients_tags": ingredients_tags,
                                               "allergen_list": allergen_list,
                                               "nutriments_100g": selected_nutriments_100g}])
             except (TypeError, KeyError):
@@ -88,7 +100,9 @@ class PopDBFromJsonWithCategories:
                                          nutri_score_grad=product_from_json["nutri_score_grad"],
                                          food_url=product_from_json["food_url"],
                                          image_src=product_from_json["image_src"],
-                                         nutriments_100g=product_from_json["nutriments_100g"])
+                                         nutriments_100g=product_from_json["nutriments_100g"],
+                                         ingredients_tags=product_from_json["ingredients_tags"],
+                                         labels_tags=product_from_json["labels_list"])
                     food_list.save()
                     # Stock allergens tag in list
                     data_allergens = product_from_json["allergen_list"]
@@ -250,7 +264,6 @@ class FindSubstitute:
 
         # If all score of matching is 0, we consider the request absurd
         for element_id in list_dict_with_score_foodlist[:1]:
-            print('element_id => ', element_id)
             if element_id['score'] == 0:
                 return ['-µ-absurd-µ-']
         # Return the dictionary of the first search matching product
@@ -262,18 +275,15 @@ class FindSubstitute:
         # Find category associated with given id
         category_from_id = FoodList.objects.filter(id=id_food_from_search_choose).values()
         given_categories_name = category_from_id[0]['category']
-        print('given_categories_name => ', given_categories_name)
         # Find better nutritional score food and associated id from database in this category
         top_scores = (FoodList.objects
                       .order_by('nutri_score_grad')
                       .values_list('nutri_score_grad', flat=True)
                       .distinct()
                       .filter(category=given_categories_name))
-        print('top_scores => ', top_scores)
         dic_healthy_substitute_from_categories = (FoodList
                                                   .objects.order_by('nutri_score_grad')
                                                   .filter(nutri_score_grad__in=top_scores)
                                                   .filter(category=given_categories_name)
-                                                  .values()[:6])
-        print('dic_healthy_substitute_from_categories => ', dic_healthy_substitute_from_categories)
+                                                  .values())
         return dic_healthy_substitute_from_categories

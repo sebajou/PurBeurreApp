@@ -31,9 +31,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY', 'Optional default value')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# if deployed on IAAS DEBUG False, PRODUCTION True,
+# if deployed on Heroku DEBUG False, PRODUCTION False,
+# if in development,  DEBUG False, PRODUCTION False.
+DEBUG = True
 
-PRODUCTION = True
+PRODUCTION = False
 
 if PRODUCTION:
     ALLOWED_HOSTS = ['167.99.35.245']
@@ -114,7 +117,7 @@ WSGI_APPLICATION = 'PurBeurre_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pur_beurre_v6_db',
+        'NAME': 'pur_beurre_v9_db',
         'USER': 'sebajou',
         'PASSWORD': '3333argh',
         'HOST': 'localhost',

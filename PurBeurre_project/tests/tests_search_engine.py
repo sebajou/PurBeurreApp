@@ -13,7 +13,7 @@ class TestsPopDBFromJsonWithCategories:
 
     def setup_method(self):
         # Open the bonbons_json_data
-        with open("bonbons.json", "r") as read_file:
+        with open("bonbons3.json", "r") as read_file:
             self.json_for_test = json.load(read_file)
         # Build json schema for test variable from json
         self.schema = Schema([{
@@ -24,11 +24,13 @@ class TestsPopDBFromJsonWithCategories:
             "food_url": And(str),
             "image_src": And(str),
             "allergen_list": And(str),
+            "labels_list": And(list),
+            "ingredients_tags": And(list),
             "nutriments_100g": And(dict),
         }])
 
         # Dictionary like dictionary made with variable_from_json function
-        with open("variables_bonbons2.json", "r") as read_file:
+        with open("variables_bonbons4.json", "r") as read_file:
             self.dictionary_from_json_bonbon = read_file.read()
             self.dictionary_from_json_bonbon = ast.literal_eval(self.dictionary_from_json_bonbon)
 
@@ -36,6 +38,7 @@ class TestsPopDBFromJsonWithCategories:
         """Control Extract useful data from json and stock it in variables corespond to schema"""
         pop = PopDBFromJsonWithCategories()
         data_category_json = self.json_for_test
+        data_category_json = [data_category_json]
         self.dictionary_build_with_json = pop.variables_from_foods_json(data_category_json=data_category_json,
                                                                         name_category="bonbon")
         dictionary_schema = self.schema
@@ -61,6 +64,8 @@ class TestsPopDBFromJsonWithCategories:
             assert int(product_from_model["scora_nova_group"])
             assert str(product_from_model["nutri_score_grad"])
             assert str(product_from_model["food_url"])
+            assert str(product_from_model["labels_tags"])
+            assert str(product_from_model["ingredients_tags"])
             assert str(product_from_model["image_src"])
             assert int(product_from_model["id"])
 
@@ -130,8 +135,10 @@ class TestsFindSubstitute:
         self.key_sentence3 = "goudoubouz à la brimiritif gaudoisiate"
         self.category = "bonbon"
         # Schema of dictionay of substitute values from database
-        self.schema = Schema({
+        self.schema2 = Schema({
             "id": And(int),
+            "labels_tags": And(str),
+            "ingredients_tags": And(str),
             "food_name": And(str),
             "category": And(str),
             "scora_nova_group": And(int),
@@ -174,12 +181,11 @@ class TestsFindSubstitute:
         list_id_food_from_search = find.database_search_and_find(key_word_for_test)
         for element_id in list_id_food_from_search:
             assert element_id == '-µ-absurd-µ-'
-            # assert element_id == 'erroreer'
 
     @pytest.mark.django_db()
     def test_healthy_substitute(self):
         id_food = self.id_food_for_substitute
-        dictionary_schema = self.schema
+        dictionary_schema = self.schema2
         find = FindSubstitute()
         dic_healthy_substitute_from_categories = find.healthy_substitute(id_food)
         assert dictionary_schema.is_valid(dic_healthy_substitute_from_categories[0])

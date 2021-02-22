@@ -2,10 +2,11 @@ from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render, redirect
 from request_api_app.search_engine import FindSubstitute
-from database_handler_app.models import MyUsers, Favorites, FoodList
 from django.contrib.auth.decorators import login_required
 import json
-
+from request_api_app.alergen_diet import IsFood
+from database_handler_app.models import MyUsers, Favorites, FoodList, Allergen, Diet
+import json
 
 def index(request):
     """Main page"""
@@ -24,10 +25,16 @@ def search_results(request):
     Use search_engine module functionalities.
     """
     if request.method == 'POST':
-        # Instanciation of class with method to find substitute
+        # Instanciation of class with method to find substitute and to bool allergen and diet
         search = FindSubstitute()
+        remove_allergen_diet = IsFood()
         # Post data from search field
         search_posted = request.POST.get('search')
+        # Post bool data to know is the search must exclude user's allergen and by adequate with user's diet
+        diet_posted = request.POST.get('diet')
+        print("diet_posted => ", diet_posted)
+        allergen_posted = request.POST.get('allergen')
+        print("allergen_posted => ", allergen_posted)
         # List of id of substitute from Post data with a method
         list_id = search.database_search_and_find(search_posted)
         # Create message specific for the type of value enter in search field
@@ -44,6 +51,23 @@ def search_results(request):
                 message = "Vous pouvez remplacer l'aliment par : "
                 # Obtain dictionnary with useful data for substitute from list of substitue id
                 dict_healthy_substitute = search.healthy_substitute(list_id[0]['id'])
+
+                print("dict_healthy_substitute before filter => ", "\n", "\n", dict_healthy_substitute, "\n")
+
+                if allergen_posted:
+                    dict_healthy_substitute = remove_allergen_diet.remove_food_from_allergen(
+                        food_dict=dict_healthy_substitute, user_id=request.user.id)
+                if diet_posted:
+                    dict_healthy_substitute = remove_allergen_diet.remove_food_from_diet(
+                        food_dict=dict_healthy_substitute, user_id=request.user.id)
+
+        dict_healthy_substitute = (list(dict_healthy_substitute))[:6]
+
+        print("dict_healthy_substitute after filter => ", "\n", "\n", dict_healthy_substitute, "\n")
+
+        if not dict_healthy_substitute:
+            message = "Nous n'avons pas trouvé d'aliments correspondant à vos critères. "
+
         return render(request, 'database_handler_app/search_results.html',
                       {'list_id': list_id, 'message': message, 'dict_healthy_substitute': dict_healthy_substitute})
 
