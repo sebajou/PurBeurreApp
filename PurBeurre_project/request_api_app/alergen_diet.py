@@ -83,8 +83,10 @@ class IsFood:
 
         if user_id:
             diet_of_user = Diet.objects.filter(myusers__id=user_id).values()
-            diet_of_user = diet_of_user[0]['diet_name']
+            print("user_id => ", user_id)
             print("diet_of_user => ", diet_of_user)
+
+            diet_of_user = diet_of_user[0]['diet_name']
 
         """food_good_diet = []
         for food_id in food_dict:

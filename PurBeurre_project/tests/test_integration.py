@@ -21,7 +21,7 @@ def create_user(db, django_user_model, test_password):
         if 'email' not in kwargs:
             kwargs['email'] = "legrandmechantloup@gmail.com"
         if 'id' not in kwargs:
-            kwargs['id'] = 1
+            kwargs['id'] = 10
         return django_user_model.objects.create_user(**kwargs)
     return make_user
 

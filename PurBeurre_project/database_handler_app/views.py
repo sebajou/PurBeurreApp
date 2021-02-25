@@ -52,7 +52,9 @@ def search_results(request):
                 # Obtain dictionnary with useful data for substitute from list of substitue id
                 dict_healthy_substitute = search.healthy_substitute(list_id[0]['id'])
 
-                print("dict_healthy_substitute before filter => ", "\n", "\n", dict_healthy_substitute, "\n")
+                # with open('dict_healthy_substitute_before_allergen_filter.json', 'w') as outfile:
+                #     json.dump(list(dict_healthy_substitute), outfile)
+                # print("dict_healthy_substitute before filter => ", "\n", "\n", dict_healthy_substitute, "\n")
 
                 if allergen_posted:
                     dict_healthy_substitute = remove_allergen_diet.remove_food_from_allergen(
@@ -63,7 +65,9 @@ def search_results(request):
 
         dict_healthy_substitute = (list(dict_healthy_substitute))[:6]
 
-        print("dict_healthy_substitute after filter => ", "\n", "\n", dict_healthy_substitute, "\n")
+        # with open('dict_healthy_substitute_after_allergen_filter.json', 'w') as outfile:
+        #     json.dump(list(dict_healthy_substitute), outfile)
+        # print("dict_healthy_substitute after filter => ", "\n", "\n", dict_healthy_substitute, "\n")
 
         if not dict_healthy_substitute:
             message = "Nous n'avons pas trouvé d'aliments correspondant à vos critères. "
