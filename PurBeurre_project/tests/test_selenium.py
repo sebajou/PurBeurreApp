@@ -81,3 +81,44 @@ class AccountTestCase(LiveServerTestCase):
         driver.find_element_by_id('id_submit_off_0').click()
 
         driver.quit()
+
+    @pytest.mark.selenium_mk
+    def test_login_then_search_with_filter_then_favorite_then_foodpage(self):
+        options = Options()
+        options.headless = True
+        print("Headless Firefox Initialized")
+
+        driver = webdriver.Firefox(options=options, executable_path=os.path.join(BASE_DIR, 'gecko/geckodriver'))
+
+        # Login
+        driver.get('http://127.0.0.1:8000/accounts/login/')
+        username = driver.find_element_by_id('id_username')
+        password = driver.find_element_by_id('id_password')
+        submit = driver.find_element_by_id('submit')
+        username.send_keys('for_diet_test2@gmail.com')
+        password.send_keys('1AQWXSZ2')
+        submit.send_keys(Keys.RETURN)
+
+        # Search food with filter
+        WebDriverWait(driver, 10).until(
+            expected_conditions.presence_of_element_located((By.ID, "profile"))
+        )
+        search = driver.find_element_by_id('search')
+        search.send_keys('choucroute')
+        search = driver.find_element_by_id('diet')
+        search.click()
+        search = driver.find_element_by_id('allergen')
+        search.click()
+        search.send_keys(Keys.RETURN)
+
+        # Add food like favorite
+        WebDriverWait(driver, 10).until(
+            expected_conditions.presence_of_element_located((By.ID, "favorite_submit_id_0"))
+        )
+        driver.find_element_by_id('favorite_submit_id_0').click()
+
+        # Go to food page
+        driver.implicitly_wait(20)
+        driver.find_element_by_id('id_submit_off_0').click()
+
+        driver.quit()

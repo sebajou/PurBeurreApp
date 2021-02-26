@@ -78,3 +78,20 @@ def test_login_search_display_page_food(auto_login_user):
     # Display page food
     response = client.post('/database_handler_app/food_page/', {'id_food': first_id_from_search})
     assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_login_search_with_filter(auto_login_user):
+    # mock request.user and login
+    client, user = auto_login_user()
+    response = client.post('/accounts/login/', {'username': 'for_diet_test2@gmail.com', 'password': '1AQWXSZ2'})
+    # Search food
+    search_food_request = {'search': 'mayonaise', 'diet': True, 'allergen': True}
+    response = client.post('/database_handler_app/search_results/', search_food_request)
+    # Extract id from html in response.content
+    # soup = BeautifulSoup(response.content, features="html.parser")
+    # find_id = soup.find(id='favorite_substitute_id_0')
+    # first_id_from_search = int(find_id['value'])
+    # # Display page food
+    # response = client.post('/database_handler_app/food_page/', {'id_food': first_id_from_search})
+    assert response.status_code == 200
