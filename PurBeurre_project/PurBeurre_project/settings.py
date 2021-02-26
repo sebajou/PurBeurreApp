@@ -34,7 +34,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'Optional default value')
 # if deployed on IAAS DEBUG False, PRODUCTION True,
 # if deployed on Heroku DEBUG False, PRODUCTION False,
 # if in development,  DEBUG False, PRODUCTION False.
-DEBUG = True
+DEBUG = False
 
 PRODUCTION = False
 
